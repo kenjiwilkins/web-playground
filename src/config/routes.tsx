@@ -70,6 +70,11 @@ export const routes: RouteConfig[] = [
         label: 'Badging API',
         component: lazy(() => import('@/pages/webapi/Badging')),
       },
+      {
+        path: '/webapi/battery',
+        label: 'Battery Status API',
+        component: lazy(() => import('@/pages/webapi/Battery')),
+      },
     ],
   },
 ]
