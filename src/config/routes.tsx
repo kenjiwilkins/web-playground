@@ -45,6 +45,18 @@ export const routes: RouteConfig[] = [
       },
     ],
   },
+  {
+    path: '/webapi',
+    label: 'Web API',
+    icon: 'Zap',
+    children: [
+      {
+        path: '/webapi/fetch',
+        label: 'Fetch API',
+        component: lazy(() => import('@/pages/webapi/Fetch')),
+      },
+    ],
+  },
 ]
 
 // Helper function to get current route children
