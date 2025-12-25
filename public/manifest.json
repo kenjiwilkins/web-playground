@@ -1,0 +1,20 @@
+{
+  "name": "Web Development Playground",
+  "short_name": "Web Playground",
+  "description": "Learn and experiment with HTML, CSS, JavaScript, and Web APIs",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#3b82f6",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/vite.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["education", "development"],
+  "screenshots": []
+}

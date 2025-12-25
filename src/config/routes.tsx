@@ -65,6 +65,11 @@ export const routes: RouteConfig[] = [
         label: 'Background Tasks',
         component: lazy(() => import('@/pages/webapi/BackgroundTasks')),
       },
+      {
+        path: '/webapi/badging',
+        label: 'Badging API',
+        component: lazy(() => import('@/pages/webapi/Badging')),
+      },
     ],
   },
 ]
