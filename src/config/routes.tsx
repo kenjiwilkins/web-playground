@@ -60,6 +60,11 @@ export const routes: RouteConfig[] = [
         label: 'Background Sync',
         component: lazy(() => import('@/pages/webapi/BackgroundSync')),
       },
+      {
+        path: '/webapi/background-tasks',
+        label: 'Background Tasks',
+        component: lazy(() => import('@/pages/webapi/BackgroundTasks')),
+      },
     ],
   },
 ]
