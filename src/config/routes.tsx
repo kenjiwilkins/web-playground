@@ -55,6 +55,11 @@ export const routes: RouteConfig[] = [
         label: 'Fetch API',
         component: lazy(() => import('@/pages/webapi/Fetch')),
       },
+      {
+        path: '/webapi/background-sync',
+        label: 'Background Sync',
+        component: lazy(() => import('@/pages/webapi/BackgroundSync')),
+      },
     ],
   },
 ]
