@@ -6,8 +6,10 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "build:vercel": "bun run --bun vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start:vercel": "bun run --bun vite preview"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.15",
