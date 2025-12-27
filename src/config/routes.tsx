@@ -95,6 +95,11 @@ export const routes: RouteConfig[] = [
         label: 'CSS Font Loading API',
         component: lazy(() => import('@/pages/webapi/FontLoading')),
       },
+      {
+        path: '/webapi/painting-api',
+        label: 'CSS Painting API',
+        component: lazy(() => import('@/pages/webapi/PaintingAPI')),
+      },
     ],
   },
 ]
