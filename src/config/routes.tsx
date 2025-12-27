@@ -85,6 +85,11 @@ export const routes: RouteConfig[] = [
         label: 'Broadcast Channel API',
         component: lazy(() => import('@/pages/webapi/BroadcastChannel')),
       },
+      {
+        path: '/webapi/custom-highlight',
+        label: 'CSS Custom Highlight API',
+        component: lazy(() => import('@/pages/css/CustomHighlight')),
+      },
     ],
   },
 ]
