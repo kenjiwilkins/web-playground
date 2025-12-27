@@ -31,9 +31,10 @@ export function BroadcastChannelDemo() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [userData, setUserData] = useState<{ username?: string; email?: string } | null>(null)
   const [activeTabs, setActiveTabs] = useState<TabInfo[]>([])
+  const [currentTime, setCurrentTime] = useState(() => Date.now())
   const channelRef = useRef<BroadcastChannel | null>(null)
   const ssoWindowRef = useRef<Window | null>(null)
-  const tabIdRef = useRef<string>(`tab-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`)
+  const [tabId] = useState(() => `tab-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`)
 
   const addLog = useCallback((message: string, type: LogEntry['type'] = 'info') => {
     const timestamp = new Date().toLocaleTimeString()
@@ -60,27 +61,27 @@ export function BroadcastChannelDemo() {
 
         // Handle presence messages for tab counting
         if (msg.type === 'tab-heartbeat' || msg.type === 'tab-joined') {
-          const tabId = msg.from
-          if (tabId && tabId !== tabIdRef.current) {
+          const otherTabId = msg.from
+          if (otherTabId && otherTabId !== tabId) {
             setActiveTabs(prev => {
-              const filtered = prev.filter(t => t.id !== tabId)
-              return [...filtered, { id: tabId, lastSeen: Date.now() }]
+              const filtered = prev.filter(t => t.id !== otherTabId)
+              return [...filtered, { id: otherTabId, lastSeen: Date.now() }]
             })
             if (msg.type === 'tab-joined') {
-              addLog(`New tab joined: ${tabId}`, 'info')
+              addLog(`New tab joined: ${otherTabId}`, 'info')
               // Respond with our presence
               channel.postMessage({
                 type: 'tab-heartbeat',
-                from: tabIdRef.current,
+                from: tabId,
                 timestamp: Date.now()
               })
             }
           }
         } else if (msg.type === 'tab-left') {
-          const tabId = msg.from
-          if (tabId) {
-            setActiveTabs(prev => prev.filter(t => t.id !== tabId))
-            addLog(`Tab left: ${tabId}`, 'info')
+          const leftTabId = msg.from
+          if (leftTabId) {
+            setActiveTabs(prev => prev.filter(t => t.id !== leftTabId))
+            addLog(`Tab left: ${leftTabId}`, 'info')
           }
         } else {
           // Count non-presence messages
@@ -99,9 +100,10 @@ export function BroadcastChannelDemo() {
             addLog('Sent PONG response', 'info')
           } else if (msg.type === 'sso-login-success') {
             // Handle SSO login success
+            const userData = msg.data as { username?: string; email?: string } | undefined
             setIsLoggedIn(true)
-            setUserData(msg.data as { username?: string; email?: string })
-            addLog(`SSO Login successful! Welcome ${(msg.data as any)?.username || 'user'}`, 'success')
+            setUserData(userData || null)
+            addLog(`SSO Login successful! Welcome ${userData?.username || 'user'}`, 'success')
           } else if (msg.type === 'beacon-received') {
             addLog(`Received beacon acknowledgment: ${JSON.stringify(msg.data)}`, 'success')
           } else {
@@ -120,7 +122,7 @@ export function BroadcastChannelDemo() {
       // Announce our presence
       channel.postMessage({
         type: 'tab-joined',
-        from: tabIdRef.current,
+        from: tabId,
         timestamp: Date.now()
       })
 
@@ -129,7 +131,7 @@ export function BroadcastChannelDemo() {
         if (channelRef.current) {
           channelRef.current.postMessage({
             type: 'tab-heartbeat',
-            from: tabIdRef.current,
+            from: tabId,
             timestamp: Date.now()
           })
         }
@@ -143,24 +145,31 @@ export function BroadcastChannelDemo() {
       }, 5000)
 
       // Store intervals for cleanup
-      ;(channel as any).__heartbeatInterval = heartbeatInterval
-      ;(channel as any).__cleanupInterval = cleanupInterval
+      const channelWithIntervals = channel as BroadcastChannel & {
+        __heartbeatInterval?: number
+        __cleanupInterval?: number
+      }
+      channelWithIntervals.__heartbeatInterval = heartbeatInterval
+      channelWithIntervals.__cleanupInterval = cleanupInterval
     } catch (error) {
       addLog(`Error opening channel: ${error}`, 'error')
     }
-  }, [isSupported, channelName, addLog])
+  }, [isSupported, channelName, addLog, tabId])
 
   const closeChannel = useCallback(() => {
     if (channelRef.current) {
       // Announce we're leaving
       channelRef.current.postMessage({
         type: 'tab-left',
-        from: tabIdRef.current,
+        from: tabId,
         timestamp: Date.now()
       })
 
       // Clear intervals
-      const channel = channelRef.current as any
+      const channel = channelRef.current as BroadcastChannel & {
+        __heartbeatInterval?: number
+        __cleanupInterval?: number
+      }
       if (channel.__heartbeatInterval) {
         clearInterval(channel.__heartbeatInterval)
       }
@@ -174,7 +183,7 @@ export function BroadcastChannelDemo() {
       setActiveTabs([])
       addLog('Channel closed', 'info')
     }
-  }, [addLog])
+  }, [addLog, tabId])
 
   const sendMessage = useCallback((message: BroadcastMessage) => {
     if (!channelRef.current) {
@@ -248,7 +257,7 @@ export function BroadcastChannelDemo() {
     if (!isChannelOpen) return
 
     const interval = setInterval(() => {
-      setActiveTabs(prev => [...prev])
+      setCurrentTime(Date.now())
     }, 1000)
 
     return () => clearInterval(interval)
@@ -261,7 +270,7 @@ export function BroadcastChannelDemo() {
         // Send leaving message synchronously
         channelRef.current.postMessage({
           type: 'tab-left',
-          from: tabIdRef.current,
+          from: tabId,
           timestamp: Date.now()
         })
       }
@@ -273,7 +282,10 @@ export function BroadcastChannelDemo() {
       window.removeEventListener('beforeunload', handleBeforeUnload)
 
       if (channelRef.current) {
-        const channel = channelRef.current as any
+        const channel = channelRef.current as BroadcastChannel & {
+          __heartbeatInterval?: number
+          __cleanupInterval?: number
+        }
         if (channel.__heartbeatInterval) {
           clearInterval(channel.__heartbeatInterval)
         }
@@ -286,7 +298,7 @@ export function BroadcastChannelDemo() {
         ssoWindowRef.current.close()
       }
     }
-  }, [])
+  }, [tabId])
 
   return (
     <div className="space-y-4">
@@ -375,7 +387,7 @@ export function BroadcastChannelDemo() {
                       <div className="h-2 w-2 rounded-full bg-blue-600 animate-pulse"></div>
                       <div className="flex-1">
                         <p className="text-sm font-medium">This Tab (You)</p>
-                        <p className="text-xs text-muted-foreground">{tabIdRef.current}</p>
+                        <p className="text-xs text-muted-foreground">{tabId}</p>
                       </div>
                     </div>
                     {activeTabs.map((tab) => (
@@ -389,7 +401,7 @@ export function BroadcastChannelDemo() {
                           <p className="text-xs text-muted-foreground">{tab.id}</p>
                         </div>
                         <span className="text-xs text-muted-foreground">
-                          {Math.floor((Date.now() - tab.lastSeen) / 1000)}s ago
+                          {Math.floor((currentTime - tab.lastSeen) / 1000)}s ago
                         </span>
                       </div>
                     ))}
