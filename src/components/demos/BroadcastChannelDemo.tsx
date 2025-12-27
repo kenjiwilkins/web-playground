@@ -15,6 +15,11 @@ interface BroadcastMessage {
   from?: string
 }
 
+interface TabInfo {
+  id: string
+  lastSeen: number
+}
+
 export function BroadcastChannelDemo() {
   const [isSupported] = useState('BroadcastChannel' in window)
   const [channelName, setChannelName] = useState('demo-channel')
@@ -25,8 +30,10 @@ export function BroadcastChannelDemo() {
   const [ssoTabOpen, setSsoTabOpen] = useState(false)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [userData, setUserData] = useState<{ username?: string; email?: string } | null>(null)
+  const [activeTabs, setActiveTabs] = useState<TabInfo[]>([])
   const channelRef = useRef<BroadcastChannel | null>(null)
   const ssoWindowRef = useRef<Window | null>(null)
+  const tabIdRef = useRef<string>(`tab-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`)
 
   const addLog = useCallback((message: string, type: LogEntry['type'] = 'info') => {
     const timestamp = new Date().toLocaleTimeString()
@@ -50,28 +57,56 @@ export function BroadcastChannelDemo() {
 
       channel.onmessage = (event: MessageEvent<BroadcastMessage>) => {
         const msg = event.data
-        setMessageCount(prev => prev + 1)
 
-        if (msg.type === 'ping') {
-          addLog(`Received PING from ${msg.from || 'unknown'}`, 'success')
-          // Auto-respond to ping
-          const response: BroadcastMessage = {
-            type: 'pong',
-            from: 'main-tab',
-            timestamp: Date.now(),
-            data: { message: 'Hello from main tab!' }
+        // Handle presence messages for tab counting
+        if (msg.type === 'tab-heartbeat' || msg.type === 'tab-joined') {
+          const tabId = msg.from
+          if (tabId && tabId !== tabIdRef.current) {
+            setActiveTabs(prev => {
+              const filtered = prev.filter(t => t.id !== tabId)
+              return [...filtered, { id: tabId, lastSeen: Date.now() }]
+            })
+            if (msg.type === 'tab-joined') {
+              addLog(`New tab joined: ${tabId}`, 'info')
+              // Respond with our presence
+              channel.postMessage({
+                type: 'tab-heartbeat',
+                from: tabIdRef.current,
+                timestamp: Date.now()
+              })
+            }
           }
-          channel.postMessage(response)
-          addLog('Sent PONG response', 'info')
-        } else if (msg.type === 'sso-login-success') {
-          // Handle SSO login success
-          setIsLoggedIn(true)
-          setUserData(msg.data as { username?: string; email?: string })
-          addLog(`SSO Login successful! Welcome ${(msg.data as any)?.username || 'user'}`, 'success')
-        } else if (msg.type === 'beacon-received') {
-          addLog(`Received beacon acknowledgment: ${JSON.stringify(msg.data)}`, 'success')
+        } else if (msg.type === 'tab-left') {
+          const tabId = msg.from
+          if (tabId) {
+            setActiveTabs(prev => prev.filter(t => t.id !== tabId))
+            addLog(`Tab left: ${tabId}`, 'info')
+          }
         } else {
-          addLog(`Received: ${JSON.stringify(msg)}`, 'success')
+          // Count non-presence messages
+          setMessageCount(prev => prev + 1)
+
+          if (msg.type === 'ping') {
+            addLog(`Received PING from ${msg.from || 'unknown'}`, 'success')
+            // Auto-respond to ping
+            const response: BroadcastMessage = {
+              type: 'pong',
+              from: 'main-tab',
+              timestamp: Date.now(),
+              data: { message: 'Hello from main tab!' }
+            }
+            channel.postMessage(response)
+            addLog('Sent PONG response', 'info')
+          } else if (msg.type === 'sso-login-success') {
+            // Handle SSO login success
+            setIsLoggedIn(true)
+            setUserData(msg.data as { username?: string; email?: string })
+            addLog(`SSO Login successful! Welcome ${(msg.data as any)?.username || 'user'}`, 'success')
+          } else if (msg.type === 'beacon-received') {
+            addLog(`Received beacon acknowledgment: ${JSON.stringify(msg.data)}`, 'success')
+          } else {
+            addLog(`Received: ${JSON.stringify(msg)}`, 'success')
+          }
         }
       }
 
@@ -81,6 +116,35 @@ export function BroadcastChannelDemo() {
 
       setIsChannelOpen(true)
       addLog(`Channel "${channelName}" opened successfully`, 'success')
+
+      // Announce our presence
+      channel.postMessage({
+        type: 'tab-joined',
+        from: tabIdRef.current,
+        timestamp: Date.now()
+      })
+
+      // Send heartbeat every 2 seconds
+      const heartbeatInterval = setInterval(() => {
+        if (channelRef.current) {
+          channelRef.current.postMessage({
+            type: 'tab-heartbeat',
+            from: tabIdRef.current,
+            timestamp: Date.now()
+          })
+        }
+      }, 2000)
+
+      // Clean up stale tabs every 5 seconds
+      const cleanupInterval = setInterval(() => {
+        const now = Date.now()
+        const timeout = 5000 // 5 seconds
+        setActiveTabs(prev => prev.filter(tab => now - tab.lastSeen < timeout))
+      }, 5000)
+
+      // Store intervals for cleanup
+      ;(channel as any).__heartbeatInterval = heartbeatInterval
+      ;(channel as any).__cleanupInterval = cleanupInterval
     } catch (error) {
       addLog(`Error opening channel: ${error}`, 'error')
     }
@@ -88,9 +152,26 @@ export function BroadcastChannelDemo() {
 
   const closeChannel = useCallback(() => {
     if (channelRef.current) {
+      // Announce we're leaving
+      channelRef.current.postMessage({
+        type: 'tab-left',
+        from: tabIdRef.current,
+        timestamp: Date.now()
+      })
+
+      // Clear intervals
+      const channel = channelRef.current as any
+      if (channel.__heartbeatInterval) {
+        clearInterval(channel.__heartbeatInterval)
+      }
+      if (channel.__cleanupInterval) {
+        clearInterval(channel.__cleanupInterval)
+      }
+
       channelRef.current.close()
       channelRef.current = null
       setIsChannelOpen(false)
+      setActiveTabs([])
       addLog('Channel closed', 'info')
     }
   }, [addLog])
@@ -162,10 +243,43 @@ export function BroadcastChannelDemo() {
     addLog('Logged out', 'info')
   }, [addLog])
 
-  // Cleanup on unmount
+  // Force re-render every second to update "last seen" times
   useEffect(() => {
-    return () => {
+    if (!isChannelOpen) return
+
+    const interval = setInterval(() => {
+      setActiveTabs(prev => [...prev])
+    }, 1000)
+
+    return () => clearInterval(interval)
+  }, [isChannelOpen])
+
+  // Cleanup on unmount and beforeunload
+  useEffect(() => {
+    const handleBeforeUnload = () => {
       if (channelRef.current) {
+        // Send leaving message synchronously
+        channelRef.current.postMessage({
+          type: 'tab-left',
+          from: tabIdRef.current,
+          timestamp: Date.now()
+        })
+      }
+    }
+
+    window.addEventListener('beforeunload', handleBeforeUnload)
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeUnload)
+
+      if (channelRef.current) {
+        const channel = channelRef.current as any
+        if (channel.__heartbeatInterval) {
+          clearInterval(channel.__heartbeatInterval)
+        }
+        if (channel.__cleanupInterval) {
+          clearInterval(channel.__cleanupInterval)
+        }
         channelRef.current.close()
       }
       if (ssoWindowRef.current && !ssoWindowRef.current.closed) {
@@ -203,7 +317,7 @@ export function BroadcastChannelDemo() {
               <CardDescription>Messages received on this channel</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-3 gap-4">
                 <div className="flex items-center justify-center p-6 bg-muted rounded-lg">
                   <div className="text-center">
                     <div className="text-4xl font-bold text-primary mb-2">
@@ -228,7 +342,72 @@ export function BroadcastChannelDemo() {
                     </div>
                   </div>
                 </div>
+                <div className="flex items-center justify-center p-6 bg-muted rounded-lg">
+                  <div className="text-center">
+                    <div className="text-4xl font-bold text-blue-600 dark:text-blue-400 mb-2">
+                      {isChannelOpen ? activeTabs.length + 1 : 0}
+                    </div>
+                    <div className="text-sm text-muted-foreground">
+                      Active Tabs
+                    </div>
+                  </div>
+                </div>
               </div>
+            </CardContent>
+          </Card>
+
+          <Card className="border-purple-500">
+            <CardHeader>
+              <CardTitle>Active Tabs Monitor</CardTitle>
+              <CardDescription>
+                Real-time tracking of all tabs with this channel open
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {!isChannelOpen ? (
+                <p className="text-sm text-muted-foreground">
+                  Open the channel to see active tabs
+                </p>
+              ) : (
+                <>
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2 p-3 bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-800 rounded-lg">
+                      <div className="h-2 w-2 rounded-full bg-blue-600 animate-pulse"></div>
+                      <div className="flex-1">
+                        <p className="text-sm font-medium">This Tab (You)</p>
+                        <p className="text-xs text-muted-foreground">{tabIdRef.current}</p>
+                      </div>
+                    </div>
+                    {activeTabs.map((tab) => (
+                      <div
+                        key={tab.id}
+                        className="flex items-center gap-2 p-3 bg-muted rounded-lg"
+                      >
+                        <div className="h-2 w-2 rounded-full bg-green-600"></div>
+                        <div className="flex-1">
+                          <p className="text-sm font-medium">Other Tab</p>
+                          <p className="text-xs text-muted-foreground">{tab.id}</p>
+                        </div>
+                        <span className="text-xs text-muted-foreground">
+                          {Math.floor((Date.now() - tab.lastSeen) / 1000)}s ago
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                  {activeTabs.length === 0 && (
+                    <div className="p-4 bg-yellow-50 dark:bg-yellow-950/20 border border-yellow-200 dark:border-yellow-800 rounded-lg">
+                      <p className="text-sm font-semibold mb-1">No other tabs detected</p>
+                      <p className="text-sm">
+                        Open this page in another tab or window to see it appear here!
+                      </p>
+                    </div>
+                  )}
+                  <div className="text-xs text-muted-foreground">
+                    <p>• Tabs send heartbeat messages every 2 seconds</p>
+                    <p>• Inactive tabs are removed after 5 seconds</p>
+                  </div>
+                </>
+              )}
             </CardContent>
           </Card>
 
