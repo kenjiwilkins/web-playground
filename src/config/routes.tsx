@@ -75,6 +75,16 @@ export const routes: RouteConfig[] = [
         label: 'Battery Status API',
         component: lazy(() => import('@/pages/webapi/Battery')),
       },
+      {
+        path: '/webapi/beacon',
+        label: 'Beacon API',
+        component: lazy(() => import('@/pages/webapi/Beacon')),
+      },
+      {
+        path: '/webapi/broadcast-channel',
+        label: 'Broadcast Channel API',
+        component: lazy(() => import('@/pages/webapi/BroadcastChannel')),
+      },
     ],
   },
 ]
