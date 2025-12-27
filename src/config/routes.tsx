@@ -90,6 +90,11 @@ export const routes: RouteConfig[] = [
         label: 'CSS Custom Highlight API',
         component: lazy(() => import('@/pages/css/CustomHighlight')),
       },
+      {
+        path: '/webapi/font-loading',
+        label: 'CSS Font Loading API',
+        component: lazy(() => import('@/pages/webapi/FontLoading')),
+      },
     ],
   },
 ]
