@@ -110,6 +110,11 @@ export const routes: RouteConfig[] = [
         label: 'CSS Typed OM API',
         component: lazy(() => import('@/pages/webapi/TypedOM')),
       },
+      {
+        path: '/webapi/cssom',
+        label: 'CSSOM (CSS Object Model)',
+        component: lazy(() => import('@/pages/webapi/CSSOM')),
+      },
     ],
   },
 ]
