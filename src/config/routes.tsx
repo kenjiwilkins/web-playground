@@ -115,6 +115,11 @@ export const routes: RouteConfig[] = [
         label: 'CSSOM (CSS Object Model)',
         component: lazy(() => import('@/pages/webapi/CSSOM')),
       },
+      {
+        path: '/webapi/canvas',
+        label: 'Canvas API',
+        component: lazy(() => import('@/pages/webapi/Canvas')),
+      },
     ],
   },
 ]
