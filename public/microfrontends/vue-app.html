@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vue Microfrontend</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      padding: 20px;
+      background: linear-gradient(135deg, #42b883 0%, #347474 100%);
+      color: white;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .badge {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: normal;
+    }
+    .status-display {
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+    }
+    .status-label {
+      font-size: 14px;
+      opacity: 0.8;
+      margin-bottom: 8px;
+    }
+    .status-value {
+      font-size: 32px;
+      font-weight: bold;
+    }
+    .controls {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    button {
+      flex: 1;
+      padding: 12px 24px;
+      background: rgba(255, 255, 255, 0.9);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      color: #42b883;
+      transition: all 0.2s;
+    }
+    button:hover {
+      background: white;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+    button:active {
+      transform: translateY(0);
+    }
+    .log {
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 8px;
+      padding: 16px;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+    .log-title {
+      font-size: 14px;
+      opacity: 0.8;
+      margin-bottom: 12px;
+    }
+    .log-entry {
+      font-size: 12px;
+      padding: 6px;
+      margin-bottom: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      font-family: monospace;
+    }
+    .log-entry.received {
+      background: rgba(76, 175, 80, 0.2);
+    }
+    .log-entry.sent {
+      background: rgba(33, 150, 243, 0.2);
+    }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+
+  <script>
+    const { createApp, ref, onMounted, onUnmounted } = Vue;
+
+    createApp({
+      setup() {
+        const status = ref('Initializing...');
+        const logs = ref([]);
+        let messagePort = null;
+
+        const addLog = (message, type = 'info') => {
+          logs.value.unshift({
+            time: new Date().toLocaleTimeString(),
+            message,
+            type
+          });
+          if (logs.value.length > 10) {
+            logs.value.pop();
+          }
+        };
+
+        const sendStatus = (newStatus) => {
+          status.value = newStatus;
+          if (messagePort) {
+            messagePort.postMessage({
+              type: 'STATUS_UPDATE',
+              status: newStatus,
+              from: 'Vue'
+            });
+            addLog(`Sent: ${newStatus}`, 'sent');
+          }
+        };
+
+        onMounted(() => {
+          // Listen for the message port from parent
+          window.addEventListener('message', (event) => {
+            if (event.data.type === 'INIT_PORT') {
+              messagePort = event.ports[0];
+
+              // Listen for messages from the channel
+              messagePort.onmessage = (e) => {
+                const msg = e.data;
+                addLog(`Received: ${JSON.stringify(msg)}`, 'received');
+
+                if (msg.type === 'STATUS_UPDATE') {
+                  status.value = msg.status;
+                } else if (msg.type === 'SYNC_REQUEST') {
+                  // Respond with current status
+                  messagePort.postMessage({
+                    type: 'STATUS_UPDATE',
+                    status: status.value,
+                    from: 'Vue'
+                  });
+                }
+              };
+
+              status.value = 'Connected via MessageChannel';
+              addLog('MessageChannel port received', 'info');
+            }
+          });
+        });
+
+        onUnmounted(() => {
+          if (messagePort) {
+            messagePort.close();
+          }
+        });
+
+        return {
+          status,
+          logs,
+          sendStatus
+        };
+      },
+      template: `
+        <div class="container">
+          <h1>
+            🟢 Vue App
+            <span class="badge">v3</span>
+          </h1>
+
+          <div class="status-display">
+            <div class="status-label">Current Status:</div>
+            <div class="status-value">{{ status }}</div>
+          </div>
+
+          <div class="controls">
+            <button @click="sendStatus('🟢 Active')">
+              Set Active
+            </button>
+            <button @click="sendStatus('🟡 Idle')">
+              Set Idle
+            </button>
+            <button @click="sendStatus('🔴 Error')">
+              Set Error
+            </button>
+          </div>
+
+          <div class="log">
+            <div class="log-title">Message Log:</div>
+            <div
+              v-for="(log, idx) in logs"
+              :key="idx"
+              :class="['log-entry', log.type]"
+            >
+              [{{ log.time }}] {{ log.message }}
+            </div>
+          </div>
+        </div>
+      `
+    }).mount('#app');
+  </script>
+</body>
+</html>

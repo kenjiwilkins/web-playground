@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>React Microfrontend</title>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      padding: 20px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .badge {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: normal;
+    }
+    .status-display {
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+    }
+    .status-label {
+      font-size: 14px;
+      opacity: 0.8;
+      margin-bottom: 8px;
+    }
+    .status-value {
+      font-size: 32px;
+      font-weight: bold;
+    }
+    .controls {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    button {
+      flex: 1;
+      padding: 12px 24px;
+      background: rgba(255, 255, 255, 0.9);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      color: #667eea;
+      transition: all 0.2s;
+    }
+    button:hover {
+      background: white;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+    button:active {
+      transform: translateY(0);
+    }
+    .log {
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 8px;
+      padding: 16px;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+    .log-title {
+      font-size: 14px;
+      opacity: 0.8;
+      margin-bottom: 12px;
+    }
+    .log-entry {
+      font-size: 12px;
+      padding: 6px;
+      margin-bottom: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      font-family: monospace;
+    }
+    .log-entry.received {
+      background: rgba(76, 175, 80, 0.2);
+    }
+    .log-entry.sent {
+      background: rgba(33, 150, 243, 0.2);
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState, useEffect, useRef } = React;
+
+    function ReactMicrofrontend() {
+      const [status, setStatus] = useState('Initializing...');
+      const [logs, setLogs] = useState([]);
+      const portRef = useRef(null);
+
+      useEffect(() => {
+        // Listen for the message port from parent
+        window.addEventListener('message', (event) => {
+          if (event.data.type === 'INIT_PORT') {
+            const port = event.ports[0];
+            portRef.current = port;
+
+            // Listen for messages from the channel
+            port.onmessage = (e) => {
+              const msg = e.data;
+              addLog(`Received: ${JSON.stringify(msg)}`, 'received');
+
+              if (msg.type === 'STATUS_UPDATE') {
+                setStatus(msg.status);
+              } else if (msg.type === 'SYNC_REQUEST') {
+                // Respond with current status
+                port.postMessage({
+                  type: 'STATUS_UPDATE',
+                  status: status,
+                  from: 'React'
+                });
+              }
+            };
+
+            setStatus('Connected via MessageChannel');
+            addLog('MessageChannel port received', 'info');
+          }
+        });
+
+        return () => {
+          if (portRef.current) {
+            portRef.current.close();
+          }
+        };
+      }, []);
+
+      const addLog = (message, type = 'info') => {
+        setLogs(prev => [{
+          time: new Date().toLocaleTimeString(),
+          message,
+          type
+        }, ...prev].slice(0, 10));
+      };
+
+      const sendStatus = (newStatus) => {
+        setStatus(newStatus);
+        if (portRef.current) {
+          portRef.current.postMessage({
+            type: 'STATUS_UPDATE',
+            status: newStatus,
+            from: 'React'
+          });
+          addLog(`Sent: ${newStatus}`, 'sent');
+        }
+      };
+
+      return (
+        <div className="container">
+          <h1>
+            ⚛️ React App
+            <span className="badge">v18</span>
+          </h1>
+
+          <div className="status-display">
+            <div className="status-label">Current Status:</div>
+            <div className="status-value">{status}</div>
+          </div>
+
+          <div className="controls">
+            <button onClick={() => sendStatus('🟢 Active')}>
+              Set Active
+            </button>
+            <button onClick={() => sendStatus('🟡 Idle')}>
+              Set Idle
+            </button>
+            <button onClick={() => sendStatus('🔴 Error')}>
+              Set Error
+            </button>
+          </div>
+
+          <div className="log">
+            <div className="log-title">Message Log:</div>
+            {logs.map((log, idx) => (
+              <div key={idx} className={`log-entry ${log.type}`}>
+                [{log.time}] {log.message}
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    }
+
+    ReactDOM.render(<ReactMicrofrontend />, document.getElementById('root'));
+  </script>
+</body>
+</html>

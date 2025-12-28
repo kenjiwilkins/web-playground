@@ -125,6 +125,11 @@ export const routes: RouteConfig[] = [
         label: 'Clipboard API',
         component: lazy(() => import('@/pages/webapi/Clipboard')),
       },
+      {
+        path: '/webapi/channel-messaging',
+        label: 'Channel Messaging API',
+        component: lazy(() => import('@/pages/webapi/ChannelMessaging')),
+      },
     ],
   },
 ]
