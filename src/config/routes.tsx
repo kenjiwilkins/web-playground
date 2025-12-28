@@ -100,6 +100,11 @@ export const routes: RouteConfig[] = [
         label: 'CSS Painting API',
         component: lazy(() => import('@/pages/webapi/PaintingAPI')),
       },
+      {
+        path: '/webapi/properties-values',
+        label: 'CSS Properties and Values API',
+        component: lazy(() => import('@/pages/webapi/PropertiesValues')),
+      },
     ],
   },
 ]
