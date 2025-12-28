@@ -105,6 +105,11 @@ export const routes: RouteConfig[] = [
         label: 'CSS Properties and Values API',
         component: lazy(() => import('@/pages/webapi/PropertiesValues')),
       },
+      {
+        path: '/webapi/typed-om',
+        label: 'CSS Typed OM API',
+        component: lazy(() => import('@/pages/webapi/TypedOM')),
+      },
     ],
   },
 ]
