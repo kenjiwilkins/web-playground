@@ -120,6 +120,11 @@ export const routes: RouteConfig[] = [
         label: 'Canvas API',
         component: lazy(() => import('@/pages/webapi/Canvas')),
       },
+      {
+        path: '/webapi/clipboard',
+        label: 'Clipboard API',
+        component: lazy(() => import('@/pages/webapi/Clipboard')),
+      },
     ],
   },
 ]
