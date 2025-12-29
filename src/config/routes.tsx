@@ -130,6 +130,11 @@ export const routes: RouteConfig[] = [
         label: 'Channel Messaging API',
         component: lazy(() => import('@/pages/webapi/ChannelMessaging')),
       },
+      {
+        path: '/webapi/compression-streams',
+        label: 'Compression Streams API',
+        component: lazy(() => import('@/pages/webapi/CompressionStreams')),
+      },
     ],
   },
 ]
