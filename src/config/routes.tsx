@@ -135,6 +135,11 @@ export const routes: RouteConfig[] = [
         label: 'Compression Streams API',
         component: lazy(() => import('@/pages/webapi/CompressionStreams')),
       },
+      {
+        path: '/webapi/compute-pressure',
+        label: 'Compute Pressure API',
+        component: lazy(() => import('@/pages/webapi/ComputePressure')),
+      },
     ],
   },
 ]
