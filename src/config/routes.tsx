@@ -140,6 +140,11 @@ export const routes: RouteConfig[] = [
         label: 'Compute Pressure API',
         component: lazy(() => import('@/pages/webapi/ComputePressure')),
       },
+      {
+        path: '/webapi/cookie-store',
+        label: 'Cookie Store API',
+        component: lazy(() => import('@/pages/webapi/CookieStore')),
+      },
     ],
   },
 ]
