@@ -145,6 +145,11 @@ export const routes: RouteConfig[] = [
         label: 'Cookie Store API',
         component: lazy(() => import('@/pages/webapi/CookieStore')),
       },
+      {
+        path: '/webapi/credential-management',
+        label: 'Credential Management API',
+        component: lazy(() => import('@/pages/webapi/CredentialManagement')),
+      },
     ],
   },
 ]

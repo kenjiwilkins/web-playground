@@ -1,10 +1,20 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
+import mkcert from 'vite-plugin-mkcert'
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    mkcert({
+      hosts: ['web-playground-henna.local', 'localhost',],
+    })
+  ],
+  server: {
+    host: 'web-playground-henna.local',
+    port: 5173
+  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
