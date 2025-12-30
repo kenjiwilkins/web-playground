@@ -155,6 +155,11 @@ export const routes: RouteConfig[] = [
         label: 'Device Memory API',
         component: lazy(() => import('@/pages/webapi/DeviceMemory')),
       },
+      {
+        path: '/webapi/device-orientation',
+        label: 'Device Orientation Events',
+        component: lazy(() => import('@/pages/webapi/DeviceOrientation')),
+      },
     ],
   },
 ]
