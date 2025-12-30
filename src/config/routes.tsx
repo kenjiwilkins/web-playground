@@ -150,6 +150,11 @@ export const routes: RouteConfig[] = [
         label: 'Credential Management API',
         component: lazy(() => import('@/pages/webapi/CredentialManagement')),
       },
+      {
+        path: '/webapi/device-memory',
+        label: 'Device Memory API',
+        component: lazy(() => import('@/pages/webapi/DeviceMemory')),
+      },
     ],
   },
 ]
