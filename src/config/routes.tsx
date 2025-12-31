@@ -160,6 +160,11 @@ export const routes: RouteConfig[] = [
         label: 'Device Orientation Events',
         component: lazy(() => import('@/pages/webapi/DeviceOrientation')),
       },
+      {
+        path: '/webapi/document-picture-in-picture',
+        label: 'Document Picture-in-Picture API',
+        component: lazy(() => import('@/pages/webapi/DocumentPictureInPicture')),
+      },
     ],
   },
 ]
