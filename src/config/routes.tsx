@@ -165,6 +165,11 @@ export const routes: RouteConfig[] = [
         label: 'Document Picture-in-Picture API',
         component: lazy(() => import('@/pages/webapi/DocumentPictureInPicture')),
       },
+      {
+        path: '/webapi/eyedropper',
+        label: 'EyeDropper API',
+        component: lazy(() => import('@/pages/webapi/EyeDropperAPI')),
+      },
     ],
   },
 ]
