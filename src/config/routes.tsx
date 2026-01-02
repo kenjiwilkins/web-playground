@@ -170,6 +170,11 @@ export const routes: RouteConfig[] = [
         label: 'EyeDropper API',
         component: lazy(() => import('@/pages/webapi/EyeDropperAPI')),
       },
+      {
+        path: '/webapi/fullscreen',
+        label: 'Fullscreen API',
+        component: lazy(() => import('@/pages/webapi/Fullscreen')),
+      },
     ],
   },
 ]
