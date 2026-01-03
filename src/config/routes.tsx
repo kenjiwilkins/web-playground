@@ -175,6 +175,11 @@ export const routes: RouteConfig[] = [
         label: 'Fullscreen API',
         component: lazy(() => import('@/pages/webapi/Fullscreen')),
       },
+      {
+        path: '/webapi/geolocation',
+        label: 'Geolocation API',
+        component: lazy(() => import('@/pages/webapi/Geolocation')),
+      },
     ],
   },
 ]
