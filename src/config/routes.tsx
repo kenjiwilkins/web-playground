@@ -180,6 +180,11 @@ export const routes: RouteConfig[] = [
         label: 'Geolocation API',
         component: lazy(() => import('@/pages/webapi/Geolocation')),
       },
+      {
+        path: '/webapi/geometry',
+        label: 'Geometry Interfaces',
+        component: lazy(() => import('@/pages/webapi/Geometry')),
+      },
     ],
   },
 ]
