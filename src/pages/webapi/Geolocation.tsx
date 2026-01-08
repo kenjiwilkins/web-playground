@@ -1,30 +1,23 @@
 import { GeolocationDemo } from '@/components/demos/GeolocationDemo'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { PageHeader } from '@/components/layout/page/PageHeader'
+import { PageSection } from '@/components/layout/page/PageSection'
+import { InfoBox } from '@/components/layout/page/InfoBox'
 
 export default function Geolocation() {
   return (
     <div className="space-y-6">
-      <div className="space-y-2">
-        <h1 id="geolocation-api" className="text-3xl font-bold tracking-tight">
-          Geolocation API
-        </h1>
-        <p className="text-muted-foreground">
-          Access the user's geographical location with their permission. Enables location-based
-          services, mapping, and personalized content delivery.
-        </p>
-      </div>
+      <PageHeader
+        id="geolocation-api"
+        title="Geolocation API"
+        description="Access the user's geographical location with their permission. Enables location-based services, mapping, and personalized content delivery."
+      />
 
-      <section>
-        <h2 id="live-demo" className="text-2xl font-semibold mb-4">
-          Live Demo
-        </h2>
+      <PageSection id="live-demo" title="Live Demo">
         <GeolocationDemo />
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="overview" className="text-2xl font-semibold mb-4">
-          Overview
-        </h2>
+      <PageSection id="overview" title="Overview">
         <Card>
           <CardHeader>
             <CardTitle>What is the Geolocation API?</CardTitle>
@@ -52,19 +45,16 @@ export default function Geolocation() {
               </ul>
             </div>
 
-            <div className="bg-yellow-500/10 p-3 rounded border border-yellow-500/30 text-sm">
-              <strong>Privacy:</strong> The Geolocation API is privacy-sensitive. Users must explicitly
+            <InfoBox variant="warning" title="Privacy">
+              The Geolocation API is privacy-sensitive. Users must explicitly
               grant permission, and browsers may show indicators when location is being accessed.
               Always respect user privacy and only request location when necessary.
-            </div>
+            </InfoBox>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="core-methods" className="text-2xl font-semibold mb-4">
-          Core Methods
-        </h2>
+      <PageSection id="core-methods" title="Core Methods">
         <div className="grid gap-4 md:grid-cols-2">
           <Card>
             <CardHeader>
@@ -167,12 +157,9 @@ navigator.geolocation.clearWatch(watchId);`}</pre>
             </CardContent>
           </Card>
         </div>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="position-data" className="text-2xl font-semibold mb-4">
-          Position Data Structure
-        </h2>
+      <PageSection id="position-data" title="Position Data Structure">
         <div className="grid gap-4">
           <Card>
             <CardHeader>
@@ -221,19 +208,16 @@ navigator.geolocation.clearWatch(watchId);`}</pre>
                 </div>
               </div>
 
-              <div className="bg-blue-500/10 p-3 rounded border border-blue-500/30 text-sm">
-                <strong>Note:</strong> Only latitude, longitude, and accuracy are guaranteed. Other
+              <InfoBox variant="info" title="Note">
+                Only latitude, longitude, and accuracy are guaranteed. Other
                 properties depend on device capabilities and may be null.
-              </div>
+              </InfoBox>
             </CardContent>
           </Card>
         </div>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="error-handling" className="text-2xl font-semibold mb-4">
-          Error Handling
-        </h2>
+      <PageSection id="error-handling" title="Error Handling">
         <Card>
           <CardHeader>
             <CardTitle>GeolocationPositionError</CardTitle>
@@ -284,12 +268,9 @@ navigator.geolocation.clearWatch(watchId);`}</pre>
             </div>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="permissions" className="text-2xl font-semibold mb-4">
-          Permissions & Security
-        </h2>
+      <PageSection id="permissions" title="Permissions & Security">
         <div className="grid gap-4">
           <Card>
             <CardHeader>
@@ -338,9 +319,9 @@ result.addEventListener('change', () => {
                 The Geolocation API only works in secure contexts (HTTPS). This protects users from
                 location tracking by malicious sites over insecure connections.
               </p>
-              <div className="bg-red-500/10 p-3 rounded border border-red-500/30 text-sm">
-                <strong>Exception:</strong> localhost is considered secure for development purposes.
-              </div>
+              <InfoBox variant="error" title="Exception">
+                localhost is considered secure for development purposes.
+              </InfoBox>
             </CardContent>
           </Card>
 
@@ -365,12 +346,9 @@ Permissions-Policy: geolocation=(self "https://maps.example.com")`}</pre>
             </CardContent>
           </Card>
         </div>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="use-cases" className="text-2xl font-semibold mb-4">
-          Common Use Cases
-        </h2>
+      <PageSection id="use-cases" title="Common Use Cases">
         <div className="grid gap-4 md:grid-cols-2">
           <Card>
             <CardHeader>
@@ -500,12 +478,9 @@ Permissions-Policy: geolocation=(self "https://maps.example.com")`}</pre>
             </CardContent>
           </Card>
         </div>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="best-practices" className="text-2xl font-semibold mb-4">
-          Best Practices
-        </h2>
+      <PageSection id="best-practices" title="Best Practices">
         <div className="grid gap-4">
           <Card>
             <CardHeader>
@@ -516,12 +491,12 @@ Permissions-Policy: geolocation=(self "https://maps.example.com")`}</pre>
                 Don't request location permission immediately on page load. Wait for user interaction
                 and explain why you need location access.
               </p>
-              <div className="bg-green-500/10 p-3 rounded border border-green-500/30 text-sm">
-                <strong>✅ Good:</strong> Show "Find Nearby Stores" button that requests permission when clicked
-              </div>
-              <div className="bg-red-500/10 p-3 rounded border border-red-500/30 text-sm">
-                <strong>❌ Bad:</strong> Request permission automatically on page load without context
-              </div>
+              <InfoBox variant="success">
+                ✅ Good: Show "Find Nearby Stores" button that requests permission when clicked
+              </InfoBox>
+              <InfoBox variant="error">
+                ❌ Bad: Request permission automatically on page load without context
+              </InfoBox>
             </CardContent>
           </Card>
 
@@ -627,12 +602,9 @@ navigator.geolocation.getCurrentPosition(
             </CardContent>
           </Card>
         </div>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="browser-support" className="text-2xl font-semibold mb-4">
-          Browser Support
-        </h2>
+      <PageSection id="browser-support" title="Browser Support">
         <Card>
           <CardHeader>
             <CardTitle>Compatibility</CardTitle>
@@ -662,24 +634,21 @@ navigator.geolocation.getCurrentPosition(
               </div>
             </div>
 
-            <div className="bg-green-500/10 p-3 rounded border border-green-500/30 text-sm">
-              <strong>Baseline:</strong> Widely available across all modern and many legacy browsers.
+            <InfoBox variant="success" title="Baseline">
+              Widely available across all modern and many legacy browsers.
               One of the most broadly supported Web APIs.
-            </div>
+            </InfoBox>
 
-            <div className="bg-yellow-500/10 p-3 rounded border border-yellow-500/30 text-sm">
-              <strong>China Note:</strong> Geolocation may be unavailable or inaccurate in China due to
+            <InfoBox variant="warning" title="China Note">
+              Geolocation may be unavailable or inaccurate in China due to
               government restrictions. Consider using local location providers like Baidu Maps,
               Autonavi, or Tencent Maps for Chinese users.
-            </div>
+            </InfoBox>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="resources" className="text-2xl font-semibold mb-4">
-          Additional Resources
-        </h2>
+      <PageSection id="resources" title="Additional Resources">
         <Card>
           <CardHeader>
             <CardTitle>Learn More</CardTitle>
@@ -729,7 +698,7 @@ navigator.geolocation.getCurrentPosition(
             </ul>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
     </div>
   )
 }

@@ -1,30 +1,23 @@
 import { FullscreenDemo } from '@/components/demos/FullscreenDemo'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { PageHeader } from '@/components/layout/page/PageHeader'
+import { PageSection } from '@/components/layout/page/PageSection'
+import { InfoBox } from '@/components/layout/page/InfoBox'
 
 export default function Fullscreen() {
   return (
     <div className="space-y-6">
-      <div className="space-y-2">
-        <h1 id="fullscreen-api" className="text-3xl font-bold tracking-tight">
-          Fullscreen API
-        </h1>
-        <p className="text-muted-foreground">
-          Make any element (images, videos, games, presentations) occupy the entire screen,
-          hiding browser UI for an immersive experience.
-        </p>
-      </div>
+      <PageHeader
+        id="fullscreen-api"
+        title="Fullscreen API"
+        description="Make any element (images, videos, games, presentations) occupy the entire screen, hiding browser UI for an immersive experience."
+      />
 
-      <section>
-        <h2 id="live-demo" className="text-2xl font-semibold mb-4">
-          Live Demo
-        </h2>
+      <PageSection id="live-demo" title="Live Demo">
         <FullscreenDemo />
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="overview" className="text-2xl font-semibold mb-4">
-          Overview
-        </h2>
+      <PageSection id="overview" title="Overview">
         <Card>
           <CardHeader>
             <CardTitle>What is the Fullscreen API?</CardTitle>
@@ -51,18 +44,15 @@ export default function Fullscreen() {
               </ul>
             </div>
 
-            <div className="bg-blue-500/10 p-3 rounded border border-blue-500/30 text-sm">
-              <strong>Security:</strong> Fullscreen mode requires user interaction (click, tap) and
+            <InfoBox variant="info" title="Security">
+              Fullscreen mode requires user interaction (click, tap) and
               can only be triggered by user gestures. Websites cannot force fullscreen mode without user action.
-            </div>
+            </InfoBox>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="core-methods" className="text-2xl font-semibold mb-4">
-          Core Methods & Properties
-        </h2>
+      <PageSection id="core-methods" title="Core Methods & Properties">
         <div className="grid gap-4 md:grid-cols-2">
           <Card>
             <CardHeader>
@@ -134,12 +124,9 @@ if (fsElement) {
             </CardContent>
           </Card>
         </div>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="events" className="text-2xl font-semibold mb-4">
-          Fullscreen Events
-        </h2>
+      <PageSection id="events" title="Fullscreen Events">
         <div className="grid gap-4">
           <Card>
             <CardHeader>
@@ -182,12 +169,9 @@ if (fsElement) {
             </CardContent>
           </Card>
         </div>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="css-styling" className="text-2xl font-semibold mb-4">
-          CSS Styling for Fullscreen
-        </h2>
+      <PageSection id="css-styling" title="CSS Styling for Fullscreen">
         <Card>
           <CardHeader>
             <CardTitle>Fullscreen Pseudo-classes</CardTitle>
@@ -237,12 +221,9 @@ if (fsElement) {
             </div>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="use-cases" className="text-2xl font-semibold mb-4">
-          Common Use Cases
-        </h2>
+      <PageSection id="use-cases" title="Common Use Cases">
         <div className="grid gap-4 md:grid-cols-2">
           <Card>
             <CardHeader>
@@ -350,12 +331,9 @@ if (fsElement) {
             </CardContent>
           </Card>
         </div>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="best-practices" className="text-2xl font-semibold mb-4">
-          Best Practices
-        </h2>
+      <PageSection id="best-practices" title="Best Practices">
         <div className="grid gap-4">
           <Card>
             <CardHeader>
@@ -366,15 +344,15 @@ if (fsElement) {
                 Fullscreen requests must be triggered by a user gesture (click, tap, key press).
                 Calling requestFullscreen() without user interaction will fail.
               </p>
-              <div className="bg-green-500/10 p-3 rounded border border-green-500/30 text-sm">
+              <InfoBox variant="success">
                 <strong>✅ Good:</strong>
                 <div className="bg-muted p-2 rounded font-mono text-xs mt-2">
                   <pre className="whitespace-pre-wrap">{`button.onclick = () => {
   element.requestFullscreen();
 };`}</pre>
                 </div>
-              </div>
-              <div className="bg-red-500/10 p-3 rounded border border-red-500/30 text-sm">
+              </InfoBox>
+              <InfoBox variant="error">
                 <strong>❌ Bad:</strong>
                 <div className="bg-muted p-2 rounded font-mono text-xs mt-2">
                   <pre className="whitespace-pre-wrap">{`// This will fail - no user gesture
@@ -382,7 +360,7 @@ setTimeout(() => {
   element.requestFullscreen();
 }, 1000);`}</pre>
                 </div>
-              </div>
+              </InfoBox>
             </CardContent>
           </Card>
 
@@ -503,12 +481,9 @@ document.addEventListener('fullscreenerror', () => {
             </CardContent>
           </Card>
         </div>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="browser-support" className="text-2xl font-semibold mb-4">
-          Browser Support
-        </h2>
+      <PageSection id="browser-support" title="Browser Support">
         <Card>
           <CardHeader>
             <CardTitle>Compatibility</CardTitle>
@@ -537,23 +512,20 @@ document.addEventListener('fullscreenerror', () => {
               </div>
             </div>
 
-            <div className="bg-blue-500/10 p-3 rounded border border-blue-500/30 text-sm">
-              <strong>Note:</strong> The Fullscreen API is widely supported in all modern browsers.
+            <InfoBox variant="info" title="Note">
+              The Fullscreen API is widely supported in all modern browsers.
               Older vendor-prefixed versions (webkit, moz) have been deprecated.
-            </div>
+            </InfoBox>
 
-            <div className="bg-yellow-500/10 p-3 rounded border border-yellow-500/30 text-sm">
-              <strong>Mobile Considerations:</strong> On some mobile devices, fullscreen behavior
+            <InfoBox variant="warning" title="Mobile Considerations">
+              On some mobile devices, fullscreen behavior
               may differ. Always test on target devices and provide fallback UI.
-            </div>
+            </InfoBox>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="security-privacy" className="text-2xl font-semibold mb-4">
-          Security & Privacy
-        </h2>
+      <PageSection id="security-privacy" title="Security & Privacy">
         <div className="grid gap-4">
           <Card>
             <CardHeader>
@@ -603,18 +575,15 @@ Permissions-Policy: fullscreen=(self "https://trusted.com")`}</pre>
                 When combining fullscreen with the Keyboard Lock API (for games), ensure users
                 can always exit. Document the exit method clearly.
               </p>
-              <div className="bg-yellow-500/10 p-3 rounded border border-yellow-500/30 text-sm">
-                <strong>Important:</strong> Never trap users in fullscreen mode without clear exit instructions.
-              </div>
+              <InfoBox variant="warning" title="Important">
+                Never trap users in fullscreen mode without clear exit instructions.
+              </InfoBox>
             </CardContent>
           </Card>
         </div>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="resources" className="text-2xl font-semibold mb-4">
-          Additional Resources
-        </h2>
+      <PageSection id="resources" title="Additional Resources">
         <Card>
           <CardHeader>
             <CardTitle>Learn More</CardTitle>
@@ -664,7 +633,7 @@ Permissions-Policy: fullscreen=(self "https://trusted.com")`}</pre>
             </ul>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
     </div>
   )
 }

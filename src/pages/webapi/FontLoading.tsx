@@ -1,29 +1,23 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { FontLoadingDemo } from '@/components/demos/FontLoadingDemo'
+import { PageHeader } from '@/components/layout/page/PageHeader'
+import { PageSection } from '@/components/layout/page/PageSection'
+import { InfoBox } from '@/components/layout/page/InfoBox'
 
 export default function FontLoading() {
   return (
     <div className="space-y-6">
-      <div className="space-y-2">
-        <h1 id="css-font-loading-api" className="text-3xl font-bold tracking-tight">
-          CSS Font Loading API
-        </h1>
-        <p className="text-muted-foreground">
-          Programmatically control font loading with JavaScript for better performance and user experience
-        </p>
-      </div>
+      <PageHeader
+        id="css-font-loading-api"
+        title="CSS Font Loading API"
+        description="Programmatically control font loading with JavaScript for better performance and user experience"
+      />
 
-      <section>
-        <h2 id="live-demo" className="text-2xl font-semibold mb-4">
-          Live Demo
-        </h2>
+      <PageSection id="live-demo" title="Live Demo">
         <FontLoadingDemo />
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="introduction" className="text-2xl font-semibold mb-4">
-          Introduction
-        </h2>
+      <PageSection id="introduction" title="Introduction">
         <Card>
           <CardHeader>
             <CardTitle>What is the CSS Font Loading API?</CardTitle>
@@ -39,21 +33,15 @@ export default function FontLoading() {
               This API is particularly useful for eliminating FOIT (Flash of Invisible Text) and FOUT (Flash
               of Unstyled Text), improving perceived performance, and creating better loading experiences.
             </p>
-            <div className="bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 p-4 rounded-lg">
-              <p className="text-sm font-semibold mb-2">Excellent Browser Support</p>
-              <p className="text-sm">
-                The CSS Font Loading API has been widely supported since 2020 and is available in all modern browsers,
-                including Web Workers.
-              </p>
-            </div>
+            <InfoBox variant="success" title="Excellent Browser Support">
+              The CSS Font Loading API has been widely supported since 2020 and is available in all modern browsers,
+              including Web Workers.
+            </InfoBox>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="main-interfaces" className="text-2xl font-semibold mb-4">
-          Main Interfaces
-        </h2>
+      <PageSection id="main-interfaces" title="Main Interfaces">
         <div className="grid gap-4 md:grid-cols-2">
           <Card>
             <CardHeader>
@@ -97,12 +85,9 @@ export default function FontLoading() {
             </CardContent>
           </Card>
         </div>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="font-states" className="text-2xl font-semibold mb-4">
-          Font Loading States
-        </h2>
+      <PageSection id="font-states" title="Font Loading States">
         <Card>
           <CardHeader>
             <CardTitle>FontFace.status Property</CardTitle>
@@ -129,12 +114,9 @@ export default function FontLoading() {
             </div>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="loading-fonts" className="text-2xl font-semibold mb-4">
-          Loading Fonts
-        </h2>
+      <PageSection id="loading-fonts" title="Loading Fonts">
         <Card>
           <CardHeader>
             <CardTitle>Methods for Loading Fonts</CardTitle>
@@ -175,12 +157,9 @@ export default function FontLoading() {
             </div>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="events" className="text-2xl font-semibold mb-4">
-          Font Loading Events
-        </h2>
+      <PageSection id="events" title="Font Loading Events">
         <Card>
           <CardHeader>
             <CardTitle>FontFaceSet Events</CardTitle>
@@ -205,12 +184,9 @@ export default function FontLoading() {
             </div>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="use-cases" className="text-2xl font-semibold mb-4">
-          Use Cases
-        </h2>
+      <PageSection id="use-cases" title="Use Cases">
         <Card>
           <CardHeader>
             <CardTitle>When to Use the Font Loading API</CardTitle>
@@ -275,12 +251,9 @@ export default function FontLoading() {
             </div>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="complete-example" className="text-2xl font-semibold mb-4">
-          Complete Example
-        </h2>
+      <PageSection id="complete-example" title="Complete Example">
         <Card>
           <CardHeader>
             <CardTitle>Loading Custom Fonts</CardTitle>
@@ -310,12 +283,9 @@ export default function FontLoading() {
             </div>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="best-practices" className="text-2xl font-semibold mb-4">
-          Best Practices
-        </h2>
+      <PageSection id="best-practices" title="Best Practices">
         <Card>
           <CardHeader>
             <CardTitle>Guidelines for Using the API</CardTitle>
@@ -350,12 +320,9 @@ export default function FontLoading() {
             </ol>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="browser-support" className="text-2xl font-semibold mb-4">
-          Browser Support
-        </h2>
+      <PageSection id="browser-support" title="Browser Support">
         <Card>
           <CardHeader>
             <CardTitle>Excellent Cross-Browser Support</CardTitle>
@@ -388,21 +355,15 @@ export default function FontLoading() {
                 </div>
               </div>
             </div>
-            <div className="mt-4 p-4 bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-lg">
-              <p className="text-sm font-semibold mb-2">Production Ready</p>
-              <p className="text-sm">
-                The CSS Font Loading API is stable and widely supported. It's safe to use in production
-                for all modern web applications.
-              </p>
-            </div>
+            <InfoBox variant="success" title="Production Ready" className="mt-4">
+              The CSS Font Loading API is stable and widely supported. It's safe to use in production
+              for all modern web applications.
+            </InfoBox>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="important-notes" className="text-2xl font-semibold mb-4">
-          Important Notes
-        </h2>
+      <PageSection id="important-notes" title="Important Notes">
         <Card>
           <CardHeader>
             <CardTitle>Key Considerations</CardTitle>
@@ -443,7 +404,7 @@ export default function FontLoading() {
             </ul>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
     </div>
   )
 }

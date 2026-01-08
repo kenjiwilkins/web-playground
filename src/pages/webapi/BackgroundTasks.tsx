@@ -1,29 +1,22 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { BackgroundTasksDemo } from '@/components/demos/BackgroundTasksDemo'
+import { PageHeader } from '@/components/layout/page/PageHeader'
+import { PageSection } from '@/components/layout/page/PageSection'
 
 export default function BackgroundTasks() {
   return (
     <div className="space-y-6">
-      <div className="space-y-2">
-        <h1 id="background-tasks-api" className="text-3xl font-bold tracking-tight">
-          Background Tasks API
-        </h1>
-        <p className="text-muted-foreground">
-          Cooperative scheduling of low-priority tasks during browser idle time
-        </p>
-      </div>
+      <PageHeader
+        id="background-tasks-api"
+        title="Background Tasks API"
+        description="Cooperative scheduling of low-priority tasks during browser idle time"
+      />
 
-      <section>
-        <h2 id="live-demo" className="text-2xl font-semibold mb-4">
-          Live Demo
-        </h2>
+      <PageSection id="live-demo" title="Live Demo">
         <BackgroundTasksDemo />
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="introduction" className="text-2xl font-semibold mb-4">
-          Introduction
-        </h2>
+      <PageSection id="introduction" title="Introduction">
         <Card>
           <CardHeader>
             <CardTitle>What is the Background Tasks API?</CardTitle>
@@ -41,12 +34,9 @@ export default function BackgroundTasks() {
             </p>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="main-methods" className="text-2xl font-semibold mb-4">
-          Main Methods
-        </h2>
+      <PageSection id="main-methods" title="Main Methods">
         <div className="grid gap-4 md:grid-cols-2">
           <Card>
             <CardHeader>
@@ -82,12 +72,9 @@ export default function BackgroundTasks() {
             </CardContent>
           </Card>
         </div>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="idle-deadline" className="text-2xl font-semibold mb-4">
-          IdleDeadline Interface
-        </h2>
+      <PageSection id="idle-deadline" title="IdleDeadline Interface">
         <Card>
           <CardHeader>
             <CardTitle>Understanding the Deadline Object</CardTitle>
@@ -114,12 +101,9 @@ export default function BackgroundTasks() {
             </div>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="basic-usage" className="text-2xl font-semibold mb-4">
-          Basic Usage
-        </h2>
+      <PageSection id="basic-usage" title="Basic Usage">
         <Card>
           <CardHeader>
             <CardTitle>Simple Example</CardTitle>
@@ -144,12 +128,9 @@ export default function BackgroundTasks() {
             </div>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="task-queue" className="text-2xl font-semibold mb-4">
-          Task Queue Example
-        </h2>
+      <PageSection id="task-queue" title="Task Queue Example">
         <Card>
           <CardHeader>
             <CardTitle>Managing a Queue of Tasks</CardTitle>
@@ -189,12 +170,9 @@ export default function BackgroundTasks() {
             </div>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="use-cases" className="text-2xl font-semibold mb-4">
-          Use Cases
-        </h2>
+      <PageSection id="use-cases" title="Use Cases">
         <Card>
           <CardHeader>
             <CardTitle>When to Use Background Tasks</CardTitle>
@@ -251,12 +229,9 @@ export default function BackgroundTasks() {
             </div>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="best-practices" className="text-2xl font-semibold mb-4">
-          Best Practices
-        </h2>
+      <PageSection id="best-practices" title="Best Practices">
         <Card>
           <CardHeader>
             <CardTitle>Guidelines for Optimal Performance</CardTitle>
@@ -283,12 +258,9 @@ export default function BackgroundTasks() {
             </ol>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="browser-support" className="text-2xl font-semibold mb-4">
-          Browser Support
-        </h2>
+      <PageSection id="browser-support" title="Browser Support">
         <Card>
           <CardHeader>
             <CardTitle>Polyfill for Older Browsers</CardTitle>
@@ -317,7 +289,7 @@ export default function BackgroundTasks() {
             </div>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
     </div>
   )
 }

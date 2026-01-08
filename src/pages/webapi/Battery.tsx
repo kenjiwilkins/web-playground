@@ -1,29 +1,24 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { BatteryDemo } from '@/components/demos/BatteryDemo'
+import { PageHeader } from '@/components/layout/page/PageHeader'
+import { PageSection } from '@/components/layout/page/PageSection'
+import { InfoBox } from '@/components/layout/page/InfoBox'
+import { CodeBlock } from '@/components/layout/page/CodeBlock'
 
 export default function Battery() {
   return (
     <div className="space-y-6">
-      <div className="space-y-2">
-        <h1 id="battery-status-api" className="text-3xl font-bold tracking-tight">
-          Battery Status API
-        </h1>
-        <p className="text-muted-foreground">
-          Access battery status information to optimize your app based on device power state
-        </p>
-      </div>
+      <PageHeader
+        id="battery-status-api"
+        title="Battery Status API"
+        description="Access battery status information to optimize your app based on device power state"
+      />
 
-      <section>
-        <h2 id="live-demo" className="text-2xl font-semibold mb-4">
-          Live Demo
-        </h2>
+      <PageSection id="live-demo" title="Live Demo">
         <BatteryDemo />
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="introduction" className="text-2xl font-semibold mb-4">
-          Introduction
-        </h2>
+      <PageSection id="introduction" title="Introduction">
         <Card>
           <CardHeader>
             <CardTitle>What is the Battery Status API?</CardTitle>
@@ -35,21 +30,15 @@ export default function Battery() {
               lets you be notified when the battery level or charging status changes. This allows
               web applications to optimize their behavior based on the battery status.
             </p>
-            <div className="bg-amber-50 dark:bg-amber-950 border border-amber-200 dark:border-amber-800 p-4 rounded-lg">
-              <p className="text-sm font-semibold mb-2">Privacy Considerations</p>
-              <p className="text-sm">
-                Due to privacy concerns, this API has limited support and may be restricted or removed
-                in some browsers. Battery information can potentially be used for device fingerprinting.
-              </p>
-            </div>
+            <InfoBox variant="warning" title="Privacy Considerations">
+              Due to privacy concerns, this API has limited support and may be restricted or removed
+              in some browsers. Battery information can potentially be used for device fingerprinting.
+            </InfoBox>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="how-it-works" className="text-2xl font-semibold mb-4">
-          How It Works
-        </h2>
+      <PageSection id="how-it-works" title="How It Works">
         <Card>
           <CardHeader>
             <CardTitle>Getting Battery Information</CardTitle>
@@ -60,19 +49,14 @@ export default function Battery() {
               The API is accessed through <code className="bg-muted px-1.5 py-0.5 rounded">navigator.getBattery()</code>,
               which returns a Promise that resolves to a <code className="bg-muted px-1.5 py-0.5 rounded">BatteryManager</code> object.
             </p>
-            <div className="bg-muted p-4 rounded-lg space-y-2">
-              <code className="block">const battery = await navigator.getBattery();</code>
-              <code className="block">console.log(battery.level); // Battery level (0 to 1)</code>
-              <code className="block">console.log(battery.charging); // Is charging?</code>
-            </div>
+            <CodeBlock code={`const battery = await navigator.getBattery();
+console.log(battery.level); // Battery level (0 to 1)
+console.log(battery.charging); // Is charging?`} />
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="battery-properties" className="text-2xl font-semibold mb-4">
-          BatteryManager Properties
-        </h2>
+      <PageSection id="battery-properties" title="BatteryManager Properties">
         <div className="grid gap-4 md:grid-cols-2">
           <Card>
             <CardHeader>
@@ -146,12 +130,9 @@ export default function Battery() {
             </CardContent>
           </Card>
         </div>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="battery-events" className="text-2xl font-semibold mb-4">
-          Battery Events
-        </h2>
+      <PageSection id="battery-events" title="Battery Events">
         <Card>
           <CardHeader>
             <CardTitle>Real-time Battery Monitoring</CardTitle>
@@ -182,12 +163,9 @@ export default function Battery() {
             </div>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="usage-examples" className="text-2xl font-semibold mb-4">
-          Usage Examples
-        </h2>
+      <PageSection id="usage-examples" title="Usage Examples">
         <Card>
           <CardHeader>
             <CardTitle>Common Usage Patterns</CardTitle>
@@ -236,12 +214,9 @@ export default function Battery() {
             </div>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="use-cases" className="text-2xl font-semibold mb-4">
-          Use Cases
-        </h2>
+      <PageSection id="use-cases" title="Use Cases">
         <Card>
           <CardHeader>
             <CardTitle>When to Use the Battery Status API</CardTitle>
@@ -288,12 +263,9 @@ export default function Battery() {
             </ul>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="browser-support" className="text-2xl font-semibold mb-4">
-          Browser Support
-        </h2>
+      <PageSection id="browser-support" title="Browser Support">
         <Card>
           <CardHeader>
             <CardTitle>Compatibility and Limitations</CardTitle>
@@ -326,49 +298,38 @@ export default function Battery() {
                 </div>
               </div>
             </div>
-            <div className="mt-4 p-4 bg-amber-50 dark:bg-amber-950 border border-amber-200 dark:border-amber-800 rounded-lg">
-              <p className="text-sm font-semibold mb-2">Important Note</p>
-              <p className="text-sm">
-                This API is being phased out in many browsers due to privacy concerns. Always check
-                for support and have fallback behavior for browsers that don't support it.
-              </p>
-            </div>
+            <InfoBox variant="warning" title="Important Note" className="mt-4">
+              This API is being phased out in many browsers due to privacy concerns. Always check
+              for support and have fallback behavior for browsers that don't support it.
+            </InfoBox>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="feature-detection" className="text-2xl font-semibold mb-4">
-          Feature Detection
-        </h2>
+      <PageSection id="feature-detection" title="Feature Detection">
         <Card>
           <CardHeader>
             <CardTitle>Checking for API Support</CardTitle>
             <CardDescription>How to detect if the Battery Status API is available</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="bg-muted p-4 rounded-lg space-y-2">
-              <code className="block">if ('getBattery' in navigator) &#123;</code>
-              <code className="block ml-4">// Battery Status API is supported</code>
-              <code className="block ml-4">const battery = await navigator.getBattery();</code>
-              <code className="block ml-4">// Use battery information</code>
-              <code className="block">&#125; else &#123;</code>
-              <code className="block ml-4">// Fallback behavior</code>
-              <code className="block ml-4">console.log('Battery Status API not supported');</code>
-              <code className="block">&#125;</code>
-            </div>
+            <CodeBlock code={`if ('getBattery' in navigator) {
+  // Battery Status API is supported
+  const battery = await navigator.getBattery();
+  // Use battery information
+} else {
+  // Fallback behavior
+  console.log('Battery Status API not supported');
+}`} />
             <p className="text-sm text-muted-foreground">
               Always check for API support before attempting to use it to ensure your app works
               gracefully across all browsers.
             </p>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="best-practices" className="text-2xl font-semibold mb-4">
-          Best Practices
-        </h2>
+      <PageSection id="best-practices" title="Best Practices">
         <Card>
           <CardHeader>
             <CardTitle>Guidelines for Using Battery Status API</CardTitle>
@@ -400,7 +361,7 @@ export default function Battery() {
             </ol>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
     </div>
   )
 }

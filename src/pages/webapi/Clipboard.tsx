@@ -1,31 +1,23 @@
 import { ClipboardDemo } from '@/components/demos/ClipboardDemo'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { PageHeader } from '@/components/layout/page/PageHeader'
+import { PageSection } from '@/components/layout/page/PageSection'
+import { InfoBox } from '@/components/layout/page/InfoBox'
 
 export default function Clipboard() {
   return (
     <div className="space-y-6">
-      <div className="space-y-2">
-        <h1 id="page-title" className="text-3xl font-bold tracking-tight">
-          Clipboard API
-        </h1>
-        <p className="text-muted-foreground">
-          Modern asynchronous API for reading from and writing to the system clipboard with proper security and permission handling.
-        </p>
-      </div>
+      <PageHeader
+        id="page-title"
+        title="Clipboard API"
+        description="Modern asynchronous API for reading from and writing to the system clipboard with proper security and permission handling."
+      />
 
-      {/* Live Demo Section */}
-      <section>
-        <h2 id="live-demo" className="text-2xl font-semibold mb-4">
-          Live Demos
-        </h2>
+      <PageSection id="live-demo" title="Live Demos">
         <ClipboardDemo />
-      </section>
+      </PageSection>
 
-      {/* What is it? */}
-      <section>
-        <h2 id="what-is-it" className="text-2xl font-semibold mb-4">
-          What is the Clipboard API?
-        </h2>
+      <PageSection id="what-is-it" title="What is the Clipboard API?">
         <Card>
           <CardHeader>
             <CardTitle>Asynchronous Clipboard Access</CardTitle>
@@ -48,7 +40,7 @@ export default function Clipboard() {
               </ul>
             </div>
             <div className="grid gap-3 md:grid-cols-2">
-              <div className="bg-green-500/10 border border-green-500/50 p-3 rounded">
+              <InfoBox variant="success">
                 <p className="text-sm font-medium mb-2">✅ Clipboard API (Modern):</p>
                 <ul className="text-xs space-y-1 list-disc list-inside">
                   <li>Asynchronous (Promise-based)</li>
@@ -56,8 +48,8 @@ export default function Clipboard() {
                   <li>Multiple content types</li>
                   <li>Actively maintained</li>
                 </ul>
-              </div>
-              <div className="bg-red-500/10 border border-red-500/50 p-3 rounded">
+              </InfoBox>
+              <InfoBox variant="error">
                 <p className="text-sm font-medium mb-2">❌ document.execCommand() (Legacy):</p>
                 <ul className="text-xs space-y-1 list-disc list-inside">
                   <li>Synchronous (blocks main thread)</li>
@@ -65,17 +57,13 @@ export default function Clipboard() {
                   <li>Limited functionality</li>
                   <li>Not recommended for new code</li>
                 </ul>
-              </div>
+              </InfoBox>
             </div>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
 
-      {/* Getting Started */}
-      <section>
-        <h2 id="getting-started" className="text-2xl font-semibold mb-4">
-          Getting Started
-        </h2>
+      <PageSection id="getting-started" title="Getting Started">
         <div className="grid gap-4">
           <Card>
             <CardHeader>
@@ -126,13 +114,9 @@ if (navigator.clipboard) {
             </CardContent>
           </Card>
         </div>
-      </section>
+      </PageSection>
 
-      {/* Core Methods */}
-      <section>
-        <h2 id="core-methods" className="text-2xl font-semibold mb-4">
-          Core Methods
-        </h2>
+      <PageSection id="core-methods" title="Core Methods">
         <div className="grid gap-4">
           <Card>
             <CardHeader>
@@ -245,13 +229,9 @@ for (const item of clipboardItems) {
             </CardContent>
           </Card>
         </div>
-      </section>
+      </PageSection>
 
-      {/* Clipboard Events */}
-      <section>
-        <h2 id="clipboard-events" className="text-2xl font-semibold mb-4">
-          Clipboard Events
-        </h2>
+      <PageSection id="clipboard-events" title="Clipboard Events">
         <Card>
           <CardHeader>
             <CardTitle>Handling Copy, Cut, and Paste Events</CardTitle>
@@ -319,13 +299,9 @@ for (const item of clipboardItems) {
             </div>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
 
-      {/* Security */}
-      <section>
-        <h2 id="security" className="text-2xl font-semibold mb-4">
-          Security & Permissions
-        </h2>
+      <PageSection id="security" title="Security & Permissions">
         <div className="grid gap-4">
           <Card>
             <CardHeader>
@@ -395,13 +371,9 @@ for (const item of clipboardItems) {
             </CardContent>
           </Card>
         </div>
-      </section>
+      </PageSection>
 
-      {/* Use Cases */}
-      <section>
-        <h2 id="use-cases" className="text-2xl font-semibold mb-4">
-          Common Use Cases
-        </h2>
+      <PageSection id="use-cases" title="Common Use Cases">
         <div className="grid gap-4 md:grid-cols-2">
           <Card>
             <CardHeader>
@@ -489,13 +461,9 @@ await navigator.clipboard
             </CardContent>
           </Card>
         </div>
-      </section>
+      </PageSection>
 
-      {/* Browser Support */}
-      <section>
-        <h2 id="browser-support" className="text-2xl font-semibold mb-4">
-          Browser Support
-        </h2>
+      <PageSection id="browser-support" title="Browser Support">
         <Card>
           <CardHeader>
             <CardTitle>Widely Supported</CardTitle>
@@ -530,13 +498,9 @@ await navigator.clipboard
             </div>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
 
-      {/* Best Practices */}
-      <section>
-        <h2 id="best-practices" className="text-2xl font-semibold mb-4">
-          Best Practices
-        </h2>
+      <PageSection id="best-practices" title="Best Practices">
         <Card>
           <CardContent className="pt-6">
             <div className="space-y-4">
@@ -585,13 +549,9 @@ await navigator.clipboard
             </div>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
 
-      {/* Resources */}
-      <section>
-        <h2 id="resources" className="text-2xl font-semibold mb-4">
-          Additional Resources
-        </h2>
+      <PageSection id="resources" title="Additional Resources">
         <Card>
           <CardContent className="pt-6">
             <ul className="space-y-2 text-sm">
@@ -648,7 +608,7 @@ await navigator.clipboard
             </ul>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
     </div>
   )
 }

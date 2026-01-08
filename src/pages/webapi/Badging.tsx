@@ -1,29 +1,24 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { BadgingDemo } from '@/components/demos/BadgingDemo'
+import { PageHeader } from '@/components/layout/page/PageHeader'
+import { PageSection } from '@/components/layout/page/PageSection'
+import { InfoBox } from '@/components/layout/page/InfoBox'
+import { CodeBlock } from '@/components/layout/page/CodeBlock'
 
 export default function Badging() {
   return (
     <div className="space-y-6">
-      <div className="space-y-2">
-        <h1 id="badging-api" className="text-3xl font-bold tracking-tight">
-          Badging API
-        </h1>
-        <p className="text-muted-foreground">
-          Set application badges to notify users of state changes without distracting notifications
-        </p>
-      </div>
+      <PageHeader
+        id="badging-api"
+        title="Badging API"
+        description="Set application badges to notify users of state changes without distracting notifications"
+      />
 
-      <section>
-        <h2 id="live-demo" className="text-2xl font-semibold mb-4">
-          Live Demo
-        </h2>
+      <PageSection id="live-demo" title="Live Demo">
         <BadgingDemo />
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="introduction" className="text-2xl font-semibold mb-4">
-          Introduction
-        </h2>
+      <PageSection id="introduction" title="Introduction">
         <Card>
           <CardHeader>
             <CardTitle>What is the Badging API?</CardTitle>
@@ -35,21 +30,15 @@ export default function Badging() {
               notify users of state changes without displaying distracting notifications. This is
               commonly used by messaging apps to display a badge on the app icon indicating new messages.
             </p>
-            <div className="bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 p-4 rounded-lg">
-              <p className="text-sm font-semibold mb-2">Limited Availability</p>
-              <p className="text-sm">
-                This API is not Baseline and doesn't work in all widely-used browsers. Check browser
-                compatibility before using in production.
-              </p>
-            </div>
+            <InfoBox variant="info" title="Limited Availability">
+              This API is not Baseline and doesn't work in all widely-used browsers. Check browser
+              compatibility before using in production.
+            </InfoBox>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="badge-types" className="text-2xl font-semibold mb-4">
-          Types of Badges
-        </h2>
+      <PageSection id="badge-types" title="Types of Badges">
         <div className="grid gap-4 md:grid-cols-2">
           <Card>
             <CardHeader>
@@ -77,12 +66,9 @@ export default function Badging() {
             </CardContent>
           </Card>
         </div>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="main-methods" className="text-2xl font-semibold mb-4">
-          Main Methods
-        </h2>
+      <PageSection id="main-methods" title="Main Methods">
         <div className="grid gap-4 md:grid-cols-2">
           <Card>
             <CardHeader>
@@ -90,9 +76,7 @@ export default function Badging() {
               <CardDescription>Set a badge on the app icon</CardDescription>
             </CardHeader>
             <CardContent className="space-y-3">
-              <div className="bg-muted p-3 rounded-lg">
-                <code className="text-sm">navigator.setAppBadge(count?)</code>
-              </div>
+              <CodeBlock code="navigator.setAppBadge(count?)" />
               <div className="space-y-2 text-sm">
                 <p><strong>No parameter:</strong> Sets a flag badge (just a marker)</p>
                 <p><strong>Number parameter:</strong> Sets badge with that count</p>
@@ -107,9 +91,7 @@ export default function Badging() {
               <CardDescription>Remove the badge</CardDescription>
             </CardHeader>
             <CardContent className="space-y-3">
-              <div className="bg-muted p-3 rounded-lg">
-                <code className="text-sm">navigator.clearAppBadge()</code>
-              </div>
+              <CodeBlock code="navigator.clearAppBadge()" />
               <p className="text-sm">
                 Clears the badge from the app icon. This is equivalent to calling{' '}
                 <code className="bg-muted px-1 py-0.5 rounded">setAppBadge(0)</code>.
@@ -117,12 +99,9 @@ export default function Badging() {
             </CardContent>
           </Card>
         </div>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="badge-states" className="text-2xl font-semibold mb-4">
-          Badge States
-        </h2>
+      <PageSection id="badge-states" title="Badge States">
         <Card>
           <CardHeader>
             <CardTitle>Understanding Badge States</CardTitle>
@@ -162,12 +141,9 @@ export default function Badging() {
             </div>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="usage-examples" className="text-2xl font-semibold mb-4">
-          Usage Examples
-        </h2>
+      <PageSection id="usage-examples" title="Usage Examples">
         <Card>
           <CardHeader>
             <CardTitle>Common Usage Patterns</CardTitle>
@@ -176,55 +152,44 @@ export default function Badging() {
           <CardContent className="space-y-4">
             <div>
               <p className="font-semibold mb-2">Setting a Numeric Badge</p>
-              <div className="bg-muted p-4 rounded-lg space-y-2">
-                <code className="block">// Set badge to show 5 unread messages</code>
-                <code className="block">navigator.setAppBadge(5);</code>
-              </div>
+              <CodeBlock code={`// Set badge to show 5 unread messages
+navigator.setAppBadge(5);`} />
             </div>
 
             <div>
               <p className="font-semibold mb-2">Setting a Flag Badge</p>
-              <div className="bg-muted p-4 rounded-lg space-y-2">
-                <code className="block">// Set a flag badge (no specific count)</code>
-                <code className="block">navigator.setAppBadge();</code>
-              </div>
+              <CodeBlock code={`// Set a flag badge (no specific count)
+navigator.setAppBadge();`} />
             </div>
 
             <div>
               <p className="font-semibold mb-2">Clearing the Badge</p>
-              <div className="bg-muted p-4 rounded-lg space-y-2">
-                <code className="block">// Option 1: Using clearAppBadge()</code>
-                <code className="block">navigator.clearAppBadge();</code>
-                <code className="block"></code>
-                <code className="block">// Option 2: Using setAppBadge(0)</code>
-                <code className="block">navigator.setAppBadge(0);</code>
-              </div>
+              <CodeBlock code={`// Option 1: Using clearAppBadge()
+navigator.clearAppBadge();
+
+// Option 2: Using setAppBadge(0)
+navigator.setAppBadge(0);`} />
             </div>
 
             <div>
               <p className="font-semibold mb-2">Real-World Example: Message Counter</p>
-              <div className="bg-muted p-4 rounded-lg space-y-2">
-                <code className="block">let unreadCount = 0;</code>
-                <code className="block"></code>
-                <code className="block">function onNewMessage() &#123;</code>
-                <code className="block ml-4">unreadCount++;</code>
-                <code className="block ml-4">navigator.setAppBadge(unreadCount);</code>
-                <code className="block">&#125;</code>
-                <code className="block"></code>
-                <code className="block">function onMessagesRead() &#123;</code>
-                <code className="block ml-4">unreadCount = 0;</code>
-                <code className="block ml-4">navigator.clearAppBadge();</code>
-                <code className="block">&#125;</code>
-              </div>
+              <CodeBlock code={`let unreadCount = 0;
+
+function onNewMessage() {
+  unreadCount++;
+  navigator.setAppBadge(unreadCount);
+}
+
+function onMessagesRead() {
+  unreadCount = 0;
+  navigator.clearAppBadge();
+}`} />
             </div>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="use-cases" className="text-2xl font-semibold mb-4">
-          Use Cases
-        </h2>
+      <PageSection id="use-cases" title="Use Cases">
         <Card>
           <CardHeader>
             <CardTitle>When to Use the Badging API</CardTitle>
@@ -271,12 +236,9 @@ export default function Badging() {
             </ul>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="requirements" className="text-2xl font-semibold mb-4">
-          Requirements
-        </h2>
+      <PageSection id="requirements" title="Requirements">
         <Card>
           <CardHeader>
             <CardTitle>Browser and Security Requirements</CardTitle>
@@ -311,12 +273,9 @@ export default function Badging() {
             </ul>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="best-practices" className="text-2xl font-semibold mb-4">
-          Best Practices
-        </h2>
+      <PageSection id="best-practices" title="Best Practices">
         <Card>
           <CardHeader>
             <CardTitle>Guidelines for Using Badges</CardTitle>
@@ -348,33 +307,28 @@ export default function Badging() {
             </ol>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="feature-detection" className="text-2xl font-semibold mb-4">
-          Feature Detection
-        </h2>
+      <PageSection id="feature-detection" title="Feature Detection">
         <Card>
           <CardHeader>
             <CardTitle>Checking for API Support</CardTitle>
             <CardDescription>How to detect if the Badging API is available</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="bg-muted p-4 rounded-lg space-y-2">
-              <code className="block">if ('setAppBadge' in navigator) &#123;</code>
-              <code className="block ml-4">// Badging API is supported</code>
-              <code className="block ml-4">navigator.setAppBadge(12);</code>
-              <code className="block">&#125; else &#123;</code>
-              <code className="block ml-4">// Fallback to other notification methods</code>
-              <code className="block ml-4">console.log('Badging API not supported');</code>
-              <code className="block">&#125;</code>
-            </div>
+            <CodeBlock code={`if ('setAppBadge' in navigator) {
+  // Badging API is supported
+  navigator.setAppBadge(12);
+} else {
+  // Fallback to other notification methods
+  console.log('Badging API not supported');
+}`} />
             <p className="text-sm text-muted-foreground">
               Always check for API support before attempting to use it, as browser support is limited.
             </p>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
     </div>
   )
 }

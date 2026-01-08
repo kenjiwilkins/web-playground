@@ -1,29 +1,23 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { BackgroundSyncDemo } from '@/components/demos/BackgroundSyncDemo'
+import { PageHeader } from '@/components/layout/page/PageHeader'
+import { PageSection } from '@/components/layout/page/PageSection'
+import { InfoBox } from '@/components/layout/page/InfoBox'
 
 export default function BackgroundSync() {
   return (
     <div className="space-y-6">
-      <div className="space-y-2">
-        <h1 id="background-sync-api" className="text-3xl font-bold tracking-tight">
-          Background Synchronization API
-        </h1>
-        <p className="text-muted-foreground">
-          Defer tasks to run in a service worker when the user has a stable network connection
-        </p>
-      </div>
+      <PageHeader
+        id="background-sync-api"
+        title="Background Synchronization API"
+        description="Defer tasks to run in a service worker when the user has a stable network connection"
+      />
 
-      <section>
-        <h2 id="live-demo" className="text-2xl font-semibold mb-4">
-          Live Demo
-        </h2>
+      <PageSection id="live-demo" title="Live Demo">
         <BackgroundSyncDemo />
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="introduction" className="text-2xl font-semibold mb-4">
-          Introduction
-        </h2>
+      <PageSection id="introduction" title="Introduction">
         <Card>
           <CardHeader>
             <CardTitle>What is Background Synchronization?</CardTitle>
@@ -35,21 +29,15 @@ export default function BackgroundSync() {
               service worker once the user has a stable network connection. This allows apps to
               synchronize data with servers even when offline or when the browser tab is closed.
             </p>
-            <div className="bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 p-4 rounded-lg">
-              <p className="text-sm font-semibold mb-2">Experimental Feature</p>
-              <p className="text-sm">
-                This API is still experimental and may not be available in all browsers. Always check
-                browser compatibility before using in production.
-              </p>
-            </div>
+            <InfoBox variant="info" title="Experimental Feature">
+              This API is still experimental and may not be available in all browsers. Always check
+              browser compatibility before using in production.
+            </InfoBox>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="how-it-works" className="text-2xl font-semibold mb-4">
-          How It Works
-        </h2>
+      <PageSection id="how-it-works" title="How It Works">
         <Card>
           <CardHeader>
             <CardTitle>The Synchronization Process</CardTitle>
@@ -72,12 +60,9 @@ export default function BackgroundSync() {
             </ol>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="main-interfaces" className="text-2xl font-semibold mb-4">
-          Main Interfaces
-        </h2>
+      <PageSection id="main-interfaces" title="Main Interfaces">
         <div className="grid gap-4 md:grid-cols-2">
           <Card>
             <CardHeader>
@@ -113,12 +98,9 @@ export default function BackgroundSync() {
             </CardContent>
           </Card>
         </div>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="register-sync" className="text-2xl font-semibold mb-4">
-          Register a Sync Task
-        </h2>
+      <PageSection id="register-sync" title="Register a Sync Task">
         <Card>
           <CardHeader>
             <CardTitle>Requesting Background Sync</CardTitle>
@@ -142,12 +124,9 @@ export default function BackgroundSync() {
             </p>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="check-tags" className="text-2xl font-semibold mb-4">
-          Check Existing Sync Tasks
-        </h2>
+      <PageSection id="check-tags" title="Check Existing Sync Tasks">
         <Card>
           <CardHeader>
             <CardTitle>Retrieve Registered Tags</CardTitle>
@@ -165,12 +144,9 @@ export default function BackgroundSync() {
             </div>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="service-worker-handler" className="text-2xl font-semibold mb-4">
-          Handle Sync in Service Worker
-        </h2>
+      <PageSection id="service-worker-handler" title="Handle Sync in Service Worker">
         <Card>
           <CardHeader>
             <CardTitle>Listening for Sync Events</CardTitle>
@@ -199,12 +175,9 @@ export default function BackgroundSync() {
             </div>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="use-cases" className="text-2xl font-semibold mb-4">
-          Common Use Cases
-        </h2>
+      <PageSection id="use-cases" title="Common Use Cases">
         <Card>
           <CardHeader>
             <CardTitle>When to Use Background Sync</CardTitle>
@@ -245,12 +218,9 @@ export default function BackgroundSync() {
             </ul>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="requirements" className="text-2xl font-semibold mb-4">
-          Requirements
-        </h2>
+      <PageSection id="requirements" title="Requirements">
         <Card>
           <CardHeader>
             <CardTitle>Security and Browser Requirements</CardTitle>
@@ -279,12 +249,9 @@ export default function BackgroundSync() {
             </ul>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="complete-example" className="text-2xl font-semibold mb-4">
-          Complete Example
-        </h2>
+      <PageSection id="complete-example" title="Complete Example">
         <Card>
           <CardHeader>
             <CardTitle>Full Implementation</CardTitle>
@@ -317,7 +284,7 @@ export default function BackgroundSync() {
             </div>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
     </div>
   )
 }

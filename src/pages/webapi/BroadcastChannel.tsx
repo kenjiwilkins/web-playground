@@ -2,6 +2,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { BroadcastChannelDemo } from '@/components/demos/BroadcastChannelDemo'
 import { SSOLoginSimulation } from '@/components/demos/SSOLoginSimulation'
 import { useEffect, useState } from 'react'
+import { PageHeader } from '@/components/layout/page/PageHeader'
+import { PageSection } from '@/components/layout/page/PageSection'
+import { InfoBox } from '@/components/layout/page/InfoBox'
 
 export default function BroadcastChannel() {
   const [isSSOMode, setIsSSOMode] = useState(false)
@@ -28,26 +31,17 @@ export default function BroadcastChannel() {
 
   return (
     <div className="space-y-6">
-      <div className="space-y-2">
-        <h1 id="broadcast-channel-api" className="text-3xl font-bold tracking-tight">
-          Broadcast Channel API
-        </h1>
-        <p className="text-muted-foreground">
-          Enable communication between different browsing contexts (tabs, windows, iframes) of the same origin
-        </p>
-      </div>
+      <PageHeader
+        id="broadcast-channel-api"
+        title="Broadcast Channel API"
+        description="Enable communication between different browsing contexts (tabs, windows, iframes) of the same origin"
+      />
 
-      <section>
-        <h2 id="live-demo" className="text-2xl font-semibold mb-4">
-          Live Demo
-        </h2>
+      <PageSection id="live-demo" title="Live Demo">
         <BroadcastChannelDemo />
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="introduction" className="text-2xl font-semibold mb-4">
-          Introduction
-        </h2>
+      <PageSection id="introduction" title="Introduction">
         <Card>
           <CardHeader>
             <CardTitle>What is the Broadcast Channel API?</CardTitle>
@@ -64,21 +58,15 @@ export default function BroadcastChannel() {
               user sessions, or broadcasting updates that should be reflected in all open instances
               of your application.
             </p>
-            <div className="bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 p-4 rounded-lg">
-              <p className="text-sm font-semibold mb-2">Good Browser Support</p>
-              <p className="text-sm">
-                The Broadcast Channel API is well-supported in modern browsers including Chrome, Firefox,
-                Edge, and Safari.
-              </p>
-            </div>
+            <InfoBox variant="success" title="Good Browser Support">
+              The Broadcast Channel API is well-supported in modern browsers including Chrome, Firefox,
+              Edge, and Safari.
+            </InfoBox>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="basic-usage" className="text-2xl font-semibold mb-4">
-          Basic Usage
-        </h2>
+      <PageSection id="basic-usage" title="Basic Usage">
         <Card>
           <CardHeader>
             <CardTitle>Creating and Using a Broadcast Channel</CardTitle>
@@ -125,12 +113,9 @@ export default function BroadcastChannel() {
             </div>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="properties-methods" className="text-2xl font-semibold mb-4">
-          Properties & Methods
-        </h2>
+      <PageSection id="properties-methods" title="Properties & Methods">
         <div className="grid gap-4 md:grid-cols-2">
           <Card>
             <CardHeader>
@@ -213,12 +198,9 @@ export default function BroadcastChannel() {
             </CardContent>
           </Card>
         </div>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="usage-examples" className="text-2xl font-semibold mb-4">
-          Usage Examples
-        </h2>
+      <PageSection id="usage-examples" title="Usage Examples">
         <Card>
           <CardHeader>
             <CardTitle>Common Usage Patterns</CardTitle>
@@ -313,12 +295,9 @@ export default function BroadcastChannel() {
             </div>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="use-cases" className="text-2xl font-semibold mb-4">
-          Use Cases
-        </h2>
+      <PageSection id="use-cases" title="Use Cases">
         <Card>
           <CardHeader>
             <CardTitle>When to Use Broadcast Channel API</CardTitle>
@@ -371,12 +350,9 @@ export default function BroadcastChannel() {
             </ul>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="advantages" className="text-2xl font-semibold mb-4">
-          Advantages
-        </h2>
+      <PageSection id="advantages" title="Advantages">
         <Card>
           <CardHeader>
             <CardTitle>Why Use Broadcast Channel API?</CardTitle>
@@ -423,12 +399,9 @@ export default function BroadcastChannel() {
             </div>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="limitations" className="text-2xl font-semibold mb-4">
-          Limitations
-        </h2>
+      <PageSection id="limitations" title="Limitations">
         <Card>
           <CardHeader>
             <CardTitle>Important Constraints</CardTitle>
@@ -469,12 +442,9 @@ export default function BroadcastChannel() {
             </ul>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="best-practices" className="text-2xl font-semibold mb-4">
-          Best Practices
-        </h2>
+      <PageSection id="best-practices" title="Best Practices">
         <Card>
           <CardHeader>
             <CardTitle>Guidelines for Using Broadcast Channel API</CardTitle>
@@ -509,12 +479,9 @@ export default function BroadcastChannel() {
             </ol>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="browser-support" className="text-2xl font-semibold mb-4">
-          Browser Support
-        </h2>
+      <PageSection id="browser-support" title="Browser Support">
         <Card>
           <CardHeader>
             <CardTitle>Wide Browser Support</CardTitle>
@@ -547,20 +514,14 @@ export default function BroadcastChannel() {
                 </div>
               </div>
             </div>
-            <div className="mt-4 p-4 bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-lg">
-              <p className="text-sm font-semibold mb-2">Production Ready</p>
-              <p className="text-sm">
-                The Broadcast Channel API has good browser support and is safe to use in modern web applications.
-              </p>
-            </div>
+            <InfoBox variant="success" title="Production Ready" className="mt-4">
+              The Broadcast Channel API has good browser support and is safe to use in modern web applications.
+            </InfoBox>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="feature-detection" className="text-2xl font-semibold mb-4">
-          Feature Detection
-        </h2>
+      <PageSection id="feature-detection" title="Feature Detection">
         <Card>
           <CardHeader>
             <CardTitle>Checking for API Support</CardTitle>
@@ -581,7 +542,7 @@ export default function BroadcastChannel() {
             </p>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
     </div>
   )
 }

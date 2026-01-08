@@ -1,29 +1,23 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { BeaconDemo } from '@/components/demos/BeaconDemo'
+import { PageHeader } from '@/components/layout/page/PageHeader'
+import { PageSection } from '@/components/layout/page/PageSection'
+import { InfoBox } from '@/components/layout/page/InfoBox'
 
 export default function Beacon() {
   return (
     <div className="space-y-6">
-      <div className="space-y-2">
-        <h1 id="beacon-api" className="text-3xl font-bold tracking-tight">
-          Beacon API
-        </h1>
-        <p className="text-muted-foreground">
-          Send asynchronous data to a server without blocking page unload, perfect for analytics and diagnostics
-        </p>
-      </div>
+      <PageHeader
+        id="beacon-api"
+        title="Beacon API"
+        description="Send asynchronous data to a server without blocking page unload, perfect for analytics and diagnostics"
+      />
 
-      <section>
-        <h2 id="live-demo" className="text-2xl font-semibold mb-4">
-          Live Demo
-        </h2>
+      <PageSection id="live-demo" title="Live Demo">
         <BeaconDemo />
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="introduction" className="text-2xl font-semibold mb-4">
-          Introduction
-        </h2>
+      <PageSection id="introduction" title="Introduction">
         <Card>
           <CardHeader>
             <CardTitle>What is the Beacon API?</CardTitle>
@@ -40,20 +34,14 @@ export default function Beacon() {
               ensuring that data is reliably sent. It's commonly used for logging, analytics, and diagnostics
               where you don't need a response from the server.
             </p>
-            <div className="bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 p-4 rounded-lg">
-              <p className="text-sm font-semibold mb-2">Wide Browser Support</p>
-              <p className="text-sm">
-                The Beacon API has excellent browser support and is widely available in all modern browsers.
-              </p>
-            </div>
+            <InfoBox variant="success" title="Wide Browser Support">
+              The Beacon API has excellent browser support and is widely available in all modern browsers.
+            </InfoBox>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="syntax" className="text-2xl font-semibold mb-4">
-          Syntax
-        </h2>
+      <PageSection id="syntax" title="Syntax">
         <Card>
           <CardHeader>
             <CardTitle>Using navigator.sendBeacon()</CardTitle>
@@ -86,12 +74,9 @@ export default function Beacon() {
             </div>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="data-types" className="text-2xl font-semibold mb-4">
-          Supported Data Types
-        </h2>
+      <PageSection id="data-types" title="Supported Data Types">
         <div className="grid gap-4 md:grid-cols-2">
           <Card>
             <CardHeader>
@@ -162,12 +147,9 @@ export default function Beacon() {
             </CardContent>
           </Card>
         </div>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="usage-examples" className="text-2xl font-semibold mb-4">
-          Usage Examples
-        </h2>
+      <PageSection id="usage-examples" title="Usage Examples">
         <Card>
           <CardHeader>
             <CardTitle>Common Usage Patterns</CardTitle>
@@ -238,12 +220,9 @@ export default function Beacon() {
             </div>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="use-cases" className="text-2xl font-semibold mb-4">
-          Use Cases
-        </h2>
+      <PageSection id="use-cases" title="Use Cases">
         <Card>
           <CardHeader>
             <CardTitle>When to Use the Beacon API</CardTitle>
@@ -290,12 +269,9 @@ export default function Beacon() {
             </ul>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="advantages" className="text-2xl font-semibold mb-4">
-          Advantages
-        </h2>
+      <PageSection id="advantages" title="Advantages">
         <Card>
           <CardHeader>
             <CardTitle>Why Use Beacon API?</CardTitle>
@@ -342,12 +318,9 @@ export default function Beacon() {
             </div>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="limitations" className="text-2xl font-semibold mb-4">
-          Limitations
-        </h2>
+      <PageSection id="limitations" title="Limitations">
         <Card>
           <CardHeader>
             <CardTitle>Important Constraints</CardTitle>
@@ -388,12 +361,9 @@ export default function Beacon() {
             </ul>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="best-practices" className="text-2xl font-semibold mb-4">
-          Best Practices
-        </h2>
+      <PageSection id="best-practices" title="Best Practices">
         <Card>
           <CardHeader>
             <CardTitle>Guidelines for Using Beacon API</CardTitle>
@@ -428,12 +398,9 @@ export default function Beacon() {
             </ol>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="browser-support" className="text-2xl font-semibold mb-4">
-          Browser Support
-        </h2>
+      <PageSection id="browser-support" title="Browser Support">
         <Card>
           <CardHeader>
             <CardTitle>Excellent Cross-Browser Support</CardTitle>
@@ -466,20 +433,14 @@ export default function Beacon() {
                 </div>
               </div>
             </div>
-            <div className="mt-4 p-4 bg-green-50 dark:bg-green-950 border border-green-200 dark:border-green-800 rounded-lg">
-              <p className="text-sm font-semibold mb-2">Production Ready</p>
-              <p className="text-sm">
-                The Beacon API has excellent browser support and is safe to use in production applications.
-              </p>
-            </div>
+            <InfoBox variant="success" title="Production Ready" className="mt-4">
+              The Beacon API has excellent browser support and is safe to use in production applications.
+            </InfoBox>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
 
-      <section>
-        <h2 id="feature-detection" className="text-2xl font-semibold mb-4">
-          Feature Detection
-        </h2>
+      <PageSection id="feature-detection" title="Feature Detection">
         <Card>
           <CardHeader>
             <CardTitle>Checking for API Support</CardTitle>
@@ -500,7 +461,7 @@ export default function Beacon() {
             </p>
           </CardContent>
         </Card>
-      </section>
+      </PageSection>
     </div>
   )
 }
